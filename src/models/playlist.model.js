@@ -1,5 +1,5 @@
 import mongoose,{Schema} from "mongoose";
-import { Video } from "./video.model";
+import { Video } from "./video.model.js";
 
 const playlistSchema = new Schema(
     {
@@ -13,11 +13,11 @@ const playlistSchema = new Schema(
         },
         videos:{
             type:Schema.Types.ObjectId,
-            ref:Video
+            ref:"Video"
         },
         owner:{
             type:Schema.Types.ObjectId,
-            ref:User
+            ref:"User"
         }
     },
     {timestamps:true}

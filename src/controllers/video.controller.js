@@ -1,7 +1,7 @@
 import mongoose, {isValidObjectId} from "mongoose"
 import {Video} from "../models/video.model.js"
 import {User} from "../models/user.model.js"
-import {apiError, apiError} from "../utils/ApiError.js"
+import {apiError} from "../utils/ApiError.js"
 import {apiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
@@ -270,7 +270,7 @@ const updateVideo = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(
         200,
         { updatedVideo },
-        "Video updat
+        "Video updated"))
 
 })
 

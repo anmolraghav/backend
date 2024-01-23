@@ -83,7 +83,8 @@ const updateTweet = asyncHandler(async (req, res) => {
         {
            $set :{content:newContent} 
         },
-        new:true)
+       { new:true}
+    )
 
         if(!newTweet){
             throw new apiError(500,"Something went wrong while updating the tweet")

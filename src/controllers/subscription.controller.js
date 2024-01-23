@@ -1,8 +1,8 @@
 import mongoose, {isValidObjectId} from "mongoose"
 import {User} from "../models/user.model.js"
 import { Subscription } from "../models/subscription.model.js"
-import {ApiError, apiError} from "../utils/ApiError.js"
-import {ApiResponse, apiResponse} from "../utils/ApiResponse.js"
+import {apiError} from "../utils/ApiError.js"
+import {apiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 
 
@@ -32,16 +32,17 @@ const toggleSubscription = asyncHandler(async (req, res) => {
             channel:channelId
 
         })
-        else{
+    }
+        else {
             subscribe = await Subscription.create({
-                subscriber = userId,
+                subscriber : userId,
                 channel : channelId
             })
         }
         return res
         .status(200)
         .json(new apiResponse(200,{},`Channel ${subscription? "Unsubscribe":"Subscribe"} successfully`))
-    }
+    
 })
 
 // controller to return subscriber list of a channel

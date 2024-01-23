@@ -26,10 +26,10 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
      unlike =  await Like.deleteOne({video:videoId})
     }
     else{
-          like = await Like.create{
+          like = await Like.create( {
                 video:videoId,
                 owner:userId
-            }
+            })
     }
     return res
     .status(200)

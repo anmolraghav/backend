@@ -1,6 +1,6 @@
 import mongoose, { isValidObjectId } from "mongoose"
 import {Comment} from "../models/comment.model.js"
-import {apiError, apiError} from "../utils/ApiError.js"
+import {apiError} from "../utils/ApiError.js"
 import {apiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import { Video } from "../models/video.model.js"
@@ -94,11 +94,12 @@ const updateComment = asyncHandler(async (req, res) => {
         {
             $set:{
                content: newContent
-            },
+            }
+        },
             {
                 new:true
             }
-        }
+        
     )
 
     if(!updateComment){
