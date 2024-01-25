@@ -246,7 +246,7 @@ const updateAccountDetails = asyncHandler(async(req,res)=>{
         throw new apiError(400,"All fields are required")
     }
 
-    const user = User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         req.user._id,
         {
             $set:{
@@ -324,7 +324,7 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
     const {username} = req.params
 
     if (!username?.trim()) {
-        throw new ApiError(400, "username is missing")
+        throw new apiError(400, "username is missing")
     }
 
     const channel = await User.aggregate([
@@ -382,13 +382,13 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
     ])
 
     if (!channel?.length) {
-        throw new ApiError(404, "channel does not exists")
+        throw new apiError(404, "channel does not exists")
     }
 
     return res
     .status(200)
     .json(
-        new ApiResponse(200, channel[0], "User channel fetched successfully")
+        new apiResponse(200, channel[0], "User channel fetched successfully")
     )
 })
 

@@ -16,13 +16,13 @@ const getAllVideos = asyncHandler(async (req, res) => {
     // Match stage for filtering by userId
 
     if (!isValidObjectId(userId)) {
-        throw new ApiError(400, "Invalid userId!");
+        throw new apiError(400, "Invalid userId!");
     }
 
     const user = await User.findById(userId);
 
     if (!user) {
-        throw new ApiError(404, "User Not available witht this userId!");
+        throw new apiError(404, "User Not available witht this userId!");
     }
 
     if (userId) {
@@ -85,7 +85,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
     Video.aggregatePaginate(aggregate, { page, limit })
         .then(function (result) {
-            return res.status(200).json(new ApiResponse(
+            return res.status(200).json(new apiResponse(
                 200,
                 { result },
                 "Fetched videos successfully"
@@ -104,7 +104,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     // Check if any field is empty
     if (![title, description].every(Boolean)) {
-        throw new ApiError(400, "All fields are required!");
+        throw new apiError(400, "All fields are required!");
     }
 
     // upload video & thumbnail on cloudinary
@@ -112,22 +112,22 @@ const publishAVideo = asyncHandler(async (req, res) => {
     const thumbnailLocalPath = req.files?.thumbnail?.[0]?.path
 
     if (!videoFileLocalPath) {
-        throw new ApiError(400, "Video is missing!");
+        throw new apiError(400, "Video is missing!");
     }
 
     if (!thumbnailLocalPath) {
-        throw new ApiError(400, "thumbnail is missing!");
+        throw new apiError(400, "thumbnail is missing!");
     }
 
     const videoFile = await uploadOnCloudinary(videoFileLocalPath);
     const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
 
     if (!videoFile) {
-        throw new ApiError(500, "Failed to upload video!, try again")
+        throw new apiError(500, "Failed to upload video!, try again")
     }
 
     if (!thumbnail) {
-        throw new ApiError(500, "Failed to upload thumbnail!, try again")
+        throw new apiError(500, "Failed to upload thumbnail!, try again")
     }
 
     // save video details in db
@@ -142,10 +142,10 @@ const publishAVideo = asyncHandler(async (req, res) => {
     })
 
     if (!video) {
-        throw new ApiError(500, "Something went wrong while uploading video, try again")
+        throw new apiError(500, "Something went wrong while uploading video, try again")
     }
 
-    return res.status(200).json(new ApiResponse(
+    return res.status(200).json(new apiResponse(
         200,
         { video },
         "Video uploaded successfully!"
